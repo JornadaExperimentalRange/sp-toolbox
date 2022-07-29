@@ -1,10 +1,10 @@
 # Landscape Toolbox Shinyproxy System
 ## Network diagram
-![service diagram](https://github.com/keramsey/sp-toolbox/blob/master/network-shinyproxy.svg)
+![service diagram](https://github.com/JornadaExperimentalRange/sp-toolbox/blob/master/network-shinyproxy.svg)
 ## Stack diagram
 Shinyproxy load balancer that serves R shiny tools
 
-![service diagram](https://github.com/keramsey/sp-toolbox/blob/master/stack-toolbox.svg)
+![service diagram](https://github.com/JornadaExperimentalRange/sp-toolbox/blob/master/stack-toolbox.svg)
 ## Image (landscapedatacommons/sp-toolbox)
 Load balancer that serve R shiny tools
 
