@@ -1,21 +1,18 @@
 version: '3.3'
-
 services:
-
   shinyproxy:
     image: landscapedatacommons/toolbox:2.6.1
-    # The labels section is where you specify configuration values for Traefik.
-    # Docker labels don’t do anything by themselves, but Traefik reads these so
-    # it knows how to treat containers.
+    # Arbitrary external port is ignored but needed otherwise connection issues
     ports:
-      - 999:8090
+      - 8080
     networks:
       - public
       - shiny-net
-#    command: ["tail", "-f", "/dev/null"]
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    
+    # The labels section is where you specify configuration values for Traefik.
+    # Docker labels don’t do anything by themselves, but Traefik reads these so
+    # it knows how to treat containers.
     deploy:
       replicas: 1
       restart_policy:
@@ -34,18 +31,15 @@ services:
           - traefik.http.routers.shinyproxy-secured.rule=Host(`${TOOLBOX_DOMAIN?Variable not set}`) # listen to port 443 for request to APP_DOMAIN (use together with the line below)
           - traefik.http.routers.shinyproxy-secured.entrypoints=https
           - traefik.http.routers.shinyproxy-secured.tls.certresolver=le # use the Let's Encrypt certificate we set up earlier
-          - traefik.http.services.shinyproxy-secured.loadbalancer.server.port=8090 # ask Traefik to search for port 8090 of the shinyproxy service container
-  
+          - traefik.http.services.shinyproxy-secured.loadbalancer.server.port=8080 # ask Traefik to search for port 8090 of the shinyproxy service container
   balanced-design-tool:
     image: landscapedatacommons/balanced-design-tool:4.2.1
     networks:
       - shiny-net
-
   benchmark-exploration-tool:
     image: landscapedatacommons/benchmark-exploration-tool:4.2.1
     networks:
       - shiny-net
-
 networks:
   public:
     external: true
