@@ -1,6 +1,6 @@
 proxy:
   title: Landscape Toolbox Portal
-  port: 8090 # use Port 8080 for ShinyProxy
+  port: 8080 # use Port 8080 for ShinyProxy
   
   container-wait-time: 30000 # how long should we wait for the container to spin up (30s as default as this is enough for our Shiny apps)
   heartbeat-rate: 10000 # the user's browser will send a heartbeat call every heartbeat-rate milliseconds (10s as default)
@@ -28,10 +28,10 @@ proxy:
   users:
   - name: admin
     password: ldc~admn1
-    groups: researchers
-  - name: test
+    groups: admins
+  - name: user
     password: ldc~tst1
-    groups: researchers
+    groups: users
   
   # Set the container backend: The container-backend can be one of docker (default), docker-swarm or Kubernetes
   container-backend: docker-swarm
@@ -45,13 +45,13 @@ proxy:
       display-name: Balanced Design Tool
       container-cmd: ["R", "-e", "shiny::runApp('/home/docker/balanced-design-tool')"]
       container-image: landscapedatacommons/balanced-design-tool:4.2.1 # this need to be replaced with your own Shiny app in production
-      access-groups: researchers # give specific access right to a group
+#      access-groups: [admins, users] # give specific access right to a group
       container-network: shiny-net
     - id: benchmark-exploration-tool
       display-name: Benchmark Exploration Tool
       container-cmd: ["R", "-e", "shiny::runApp('/home/docker/benchmark-exploration-tool')"]
       container-image: landscapedatacommons/benchmark-exploration-tool:4.2.1 # this need to be replaced with your own Shiny app in production
-      access-groups: researchers # give specific access right to a group
+#      access-groups: [admins, users] # give specific access right to a group
       container-network: shiny-net
 
 #server:
